@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Commande En Ligne</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <h1>Bienvenue chez Moi !</h1>
+    <h2>Menu</h2>
+
+    <form action="/commander" method="post">
+        <label for="nom">Votre nom :</label><br>
+        <input type="text" id="nom" name="nom" required><br><br>
+
+        <label for="plat">Choisissez un plat :</label><br>
+        <select id="plat" name="plat" required>
+            <option value="Burger">Burger</option>
+            <option value="Pizza">Pizza</option>
+            <option value="Salade">Salade</option>
+            <option value="Pâtes">Pâtes</option>
+        </select><br><br>
+
+        <label for="quantite">Quantité :</label><br>
+        <input type="number" id="quantite" name="quantite" min="1" value="1"><br><br>
+
+        <label for="telephone">Votre téléphone :</label><br>
+        <input type="tel" id="telephone" name="telephone"><br><br>
+
+        <button type="submit">Passer ma commande</button>
+    </form>
+</body>
+</html>
