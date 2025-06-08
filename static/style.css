@@ -1,6 +1,8 @@
+/* style.css */
+
 body {
     font-family: 'Segoe UI', sans-serif;
-    background-color: #fff8f0;
+    background-color: #fff8f0; /* Blanc cassé */
     margin: 0;
     padding: 20px;
 }
@@ -14,9 +16,10 @@ body {
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
-h1 {
-    color: #d62828;
+#titre-site {
+    color: #f77f00; /* Orange vif */
     text-align: center;
+    font-size: 2.5em;
     margin-bottom: 10px;
 }
 
@@ -34,6 +37,7 @@ form {
 label {
     font-weight: bold;
     margin-bottom: 5px;
+    color: #333;
 }
 
 input, select, button {
@@ -44,8 +48,12 @@ input, select, button {
     font-size: 1rem;
 }
 
+select {
+    height: 38px;
+}
+
 button {
-    background-color: #f77f00;
+    background-color: #fcbf49;
     color: white;
     border: none;
     cursor: pointer;
@@ -53,5 +61,5 @@ button {
 }
 
 button:hover {
-    background-color: #fcbf49;
+    background-color: #f77f00;
 }

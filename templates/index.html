@@ -2,32 +2,49 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Commande En Ligne</title>
+    <title>SAVEUR DE BABY - Menu</title>
     <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-    <h1>Bienvenue chez Moi !</h1>
-    <h2>Menu</h2>
+    <div class="container">
+        <h1 id="titre-site">SAVEUR DE BABY</h1>
 
-    <form action="/commander" method="post">
-        <label for="nom">Votre nom :</label><br>
-        <input type="text" id="nom" name="nom" required><br><br>
+        <h2>Nos Plats</h2>
 
-        <label for="plat">Choisissez un plat :</label><br>
-        <select id="plat" name="plat" required>
-            <option value="Burger">Burger</option>
-            <option value="Pizza">Pizza</option>
-            <option value="Salade">Salade</option>
-            <option value="Pâtes">Pâtes</option>
-        </select><br><br>
+        <form action="/commander" method="post">
+            <label for="nom">Votre nom :</label><br>
+            <input type="text" id="nom" name="nom" required><br><br>
 
-        <label for="quantite">Quantité :</label><br>
-        <input type="number" id="quantite" name="quantite" min="1" value="1"><br><br>
+            <label for="plat">Choisissez un plat :</label><br>
+            <select id="plat" name="plat" required>
+                <option value="Bourgignon sauté à la moutarde">Bourgignon sauté à la moutarde</option>
+                <option value="soupe de carpe avec Attieké">Soupe de carpe avec attiéké</option>
+                <option value="Poulet au gingembre">Poulet au gingembre</option>
+                <option value="Spaghetti au bourguignon">Spaghetti au bourguignon</option>
+                <option value="Spaghetti aux boulettes">Spaghetti aux boulettes</option>
+                <option value="Ragoût d'i pour gnames au poulet">Ragoût d'i pour gnames au poulet</option>
+                <option value="Petit Pois à la viande de boeuf">Petit Pois à la viande de boeuf</option>
+                <option value="Petit Pois au poulet">Petit Pois au poulet</option>
+                <option value="Petit Pois aux boulettes">Petit Pois aux boulettes</option>
+                <option value="Soupe de légumes maison">Soupe de légumes maison</option>
+                <option value="Boulettes sautées">Boulettes sautées</option>
+                <option value="Pomme de terre sauté aux boulettes avec petit pois">Pomme de terre sauté aux boulettes avec petit pois</option>
+                <option value="Pomme de terre sauté au bourguignon">Pomme de terre sauté au bourguignon</option>
+                <option value="Ragoût de Pomme de terre sauté à la viande de boeuf">Ragoût de Pomme de terre sauté à la viande de boeuf</option>
+                <option value="Ignames grillés aux oeufs">Ignames grillés aux œufs</option>
+                <option value="Ignames grillés au poisson">Ignames grillés au poisson</option>
+                <option value="Attieké poulet">Attieké poulet</option>
+                <option value="Attieké au poisson grillé">Attieké au poisson grillé</option>
+            </select><br><br>
 
-        <label for="telephone">Votre téléphone :</label><br>
-        <input type="tel" id="telephone" name="telephone"><br><br>
+            <label for="quantite">Quantité :</label><br>
+            <input type="number" id="quantite" name="quantite" min="1" value="1"><br><br>
 
-        <button type="submit">Passer ma commande</button>
-    </form>
+            <label for="telephone">Votre téléphone :</label><br>
+            <input type="tel" id="telephone" name="telephone"><br><br>
+
+            <button type="submit">Passer ma commande</button>
+        </form>
+    </div>
 </body>
 </html>
