@@ -15,33 +15,38 @@
             <label for="nom">Votre nom :</label><br>
             <input type="text" id="nom" name="nom" required><br><br>
 
-            <label for="plat">Choisissez un plat :</label><br>
-            <select id="plat" name="plat" required>
-                <option value="Bourgignon sauté à la moutarde">Bourgignon sauté à la moutarde</option>
-                <option value="soupe de carpe avec Attieké">Soupe de carpe avec attiéké</option>
-                <option value="Poulet au gingembre">Poulet au gingembre</option>
-                <option value="Spaghetti au bourguignon">Spaghetti au bourguignon</option>
-                <option value="Spaghetti aux boulettes">Spaghetti aux boulettes</option>
-                <option value="Ragoût d'i pour gnames au poulet">Ragoût d'i pour gnames au poulet</option>
-                <option value="Petit Pois à la viande de boeuf">Petit Pois à la viande de boeuf</option>
-                <option value="Petit Pois au poulet">Petit Pois au poulet</option>
-                <option value="Petit Pois aux boulettes">Petit Pois aux boulettes</option>
-                <option value="Soupe de légumes maison">Soupe de légumes maison</option>
-                <option value="Boulettes sautées">Boulettes sautées</option>
-                <option value="Pomme de terre sauté aux boulettes avec petit pois">Pomme de terre sauté aux boulettes avec petit pois</option>
-                <option value="Pomme de terre sauté au bourguignon">Pomme de terre sauté au bourguignon</option>
-                <option value="Ragoût de Pomme de terre sauté à la viande de boeuf">Ragoût de Pomme de terre sauté à la viande de boeuf</option>
-                <option value="Ignames grillés aux oeufs">Ignames grillés aux œufs</option>
-                <option value="Ignames grillés au poisson">Ignames grillés au poisson</option>
-                <option value="Attieké poulet">Attieké poulet</option>
-                <option value="Attieké au poisson grillé">Attieké au poisson grillé</option>
+            <!-- Sélection multiple -->
+            <label>Choisissez vos plats (plusieurs choix possibles) :</label><br>
+            <select name="plats[]" id="plats" multiple size="6" required>
+                <option value="Bourgignon sauté à la moutarde">Bourgignon sauté à la moutarde — 5000 FCFA</option>
+                <option value="soupe-de-carpe-avec-attieke">Soupe de carpe avec attiéké — 4500 FCFA</option>
+                <option value="Poulet-au-gingembre">Poulet au gingembre — 5500 FCFA</option>
+                <option value="Spaghetti-au-bourguignon">Spaghetti au bourguignon — 4000 FCFA</option>
+                <option value="Spaghetti-aux-boulettes">Spaghetti aux boulettes — 4000 FCFA</option>
+                <option value="Attieké-poulet">Attieké poulet — 4500 FCFA</option>
+                <option value="Ignames-grillés-au-poison">Ignames grillés au poisson — 4000 FCFA</option>
+                <option value="Ragoût-d-i-pour-gnames">Ragoût d'i pour gnames au poulet — 4500 FCFA</option>
+                <option value="Petit-Pois-viande-boeuf">Petit Pois à la viande de bœuf — 4500 FCFA</option>
+                <option value="Petit-Pois-au-poulet">Petit Pois au poulet — 4000 FCFA</option>
+                <option value="Pomme-de-terre-sautee">Pomme de terre sautée aux boulettes — 4000 FCFA</option>
+                <option value="Soupe-legumes-maison">Soupe légumes maison — 3000 FCFA</option>
+                <option value="Boulettes-sautees">Boulettes sautées — 3500 FCFA</option>
             </select><br><br>
 
-            <label for="quantite">Quantité :</label><br>
+            <label for="quantite">Quantité totale souhaitée (pour tous les plats choisis) :</label><br>
             <input type="number" id="quantite" name="quantite" min="1" value="1"><br><br>
 
+            <label for="boisson">Boisson (facultatif) :</label><br>
+            <select name="boisson" id="boisson">
+                <option value="Aucune">Aucune</option>
+                <option value="Coca Cola">Coca Cola — 1000 FCFA</option>
+                <option value="Jus naturel">Jus naturel — 1500 FCFA</option>
+                <option value="Eau 1,5L">Eau 1,5L — 1000 FCFA</option>
+                <option value="Bières locales">Bières locales — 1500 FCFA</option>
+            </select><br><br>
+
             <label for="telephone">Votre téléphone :</label><br>
-            <input type="tel" id="telephone" name="telephone"><br><br>
+            <input type="tel" id="telephone" name="telephone" required><br><br>
 
             <button type="submit">Passer ma commande</button>
         </form>
