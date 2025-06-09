@@ -2,41 +2,58 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>SAVEUR DE BABI</title>
-    <link rel="stylesheet" href="/style.css">
+    <title>SAVEUR DE BABI - Menu</title>
+    <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
     <div class="container">
         <h1 id="titre-site">SAVEUR DE BABI</h1>
-        <h2 id="sous-titre">Saveur de babi — La bonne bouffe en ligne</h2>
-        <p style="text-align: center; font-size: 1.2em; font-weight: bold;">📞 +225 07 89 55 32 10</p>
+        <h2 id="sous-titre">Épicé et bien assaisonné — La bonne bouffe en ligne</h2>
+
+        <p style="text-align: center;">📞 +225 07 89 55 32 10</p>
 
         <form action="/commander" method="post">
-            <label for="nom">Votre nom :</label>
-            <input type="text" id="nom" name="nom" required><br>
+            <label for="nom">Votre nom :</label><br>
+            <input type="text" id="nom" name="nom" required><br><br>
 
             <label>Choisissez vos plats :</label><br>
-            <select name="plats[]" multiple size="6" required>
+            <select name="plats[]" id="plat" multiple size="6" required>
                 <option value="Bourgignon sauté à la moutarde - 4000 FCFA">Bourgignon sauté à la moutarde – 4000 FCFA</option>
                 <option value="Bourgignon sauté aux légumes avec le riz - 6000 FCFA">Bourgignon sauté aux légumes avec le riz – 6000 FCFA</option>
                 <option value="Soupe de carpe avec attiéké - 4000 FCFA">Soupe de carpe avec attiéké – 4000 FCFA</option>
-                <option value="Soupe du pêcheur avec attiéké – 6000 FCFA">Soupe du pêcheur avec attiéké – 6000 FCFA</option>
+                <option value="Soupe du pêcheur avec attiéké - 6000 FCFA">Soupe du pêcheur avec attiéké – 6000 FCFA</option>
                 <option value="Poulet au gingembre - 3500 FCFA">Poulet au gingembre – 3500 FCFA</option>
+                <option value="Demi Poulet - 3500 FCFA">Demi Poulet – 3500 FCFA</option>
+                <option value="Demi Poulet Pané - 3500 FCFA">Demi Poulet Pané – 3500 FCFA</option>
+                <option value="Kedjenou de Poulet - 3500 FCFA">Kedjenou de Poulet – 3500 FCFA</option>
                 <option value="Spaghetti au bourguignon - 4000 FCFA">Spaghetti au bourguignon – 4000 FCFA</option>
                 <option value="Attieké Poisson sole frit - 2500 FCFA">Attieké Poisson sole frit – 2500 FCFA</option>
                 <option value="Spaghetti aux boulettes - 4000 FCFA">Spaghetti aux boulettes – 4000 FCFA</option>
                 <option value="Spaghetti au poulet - 4500 FCFA">Spaghetti au poulet – 4500 FCFA</option>
                 <option value="Attieké poulet - 3000 FCFA">Attieké poulet – 3000 FCFA</option>
                 <option value="Ignames grillés au poisson - 4000 FCFA">Ignames grillés au poisson – 4000 FCFA</option>
-                <option value="Ragoût d'i pour gnames au boeuf - 4500 FCFA">Ragoût d'i pour gnames au boeuf – 4500 FCFA</option>
+                <option value="Ragoût d'ignames au boeuf - 4500 FCFA">Ragoût d'ignames au boeuf – 4500 FCFA</option>
+                <option value="Ragoût d'ignames au poulet - 4500 FCFA">Ragoût d'ignames au poulet – 4500 FCFA</option>
+                <option value="Ragoût de pomme de terre au boeuf - 4500 FCFA">Ragoût de pomme de terre au boeuf – 4500 FCFA</option>
+                <option value="Petit Pois à la viande de bœuf - 4500 FCFA">Petit Pois à la viande de bœuf – 4500 FCFA</option>
+                <option value="Petit Pois aux boulettes - 4500 FCFA">Petit Pois aux boulettes – 4500 FCFA</option>
                 <option value="Petit Pois au poulet - 4500 FCFA">Petit Pois au poulet – 4500 FCFA</option>
                 <option value="Pomme de terre sautée au petit pois - 6500 FCFA">Pomme de terre sautée au petit pois – 6500 FCFA</option>
+                <option value="Pomme de terre sautée au bourguignon - 4500 FCFA">Pomme de terre sautée au bourguignon – 4500 FCFA</option>
+                <option value="Soupe légumes maison - 3000 FCFA">Soupe légumes maison – 3000 FCFA</option>
+                <option value="Boulettes sautées - 4000 FCFA">Boulettes sautées – 4000 FCFA</option>
                 <option value="Alloco aux oeufs - 2500 FCFA">Alloco aux oeufs – 2500 FCFA</option>
-                <option value="Claclo - 1000 FCFA">Claclo – 1000 FCFA</option>
+                <option value="Alloco au poulet - 3500 FCFA">Alloco au poulet – 3500 FCFA</option>
+                <option value="frites aux Boulettes sautées - 4500 FCFA">Frites aux Boulettes sautées – 4500 FCFA</option>
+                <option value="frites au poulet sauté - 4000 FCFA">Frites au poulet sauté – 4000 FCFA</option>
+                <option value="Attieké huile rouge - 630 FCFA">Attieké huile rouge – 630 FCFA</option>
                 <option value="Riz - 1000 FCFA">Riz – 1000 FCFA</option>
+                <option value="Claclo - 1000 FCFA">Claclo – 1000 FCFA</option>
+                <option value="Alloco - 1000 FCFA">Alloco – 1000 FCFA</option>
+                <option value="Ignames grillés - 1000 FCFA">Ignames grillés – 1000 FCFA</option>
             </select><br><br>
 
-            <label for="quantite">Quantité souhaitée (pour tous les plats) :</label><br>
+            <label for="quantite">Quantité souhaitée (pour tous les plats choisis) :</label><br>
             <input type="number" id="quantite" name="quantite" min="1" value="1"><br><br>
 
             <label for="telephone">Votre téléphone :</label><br>
