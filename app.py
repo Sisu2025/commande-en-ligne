@@ -1,25 +1,13 @@
 from flask import Flask, render_template, request
+import os
 import requests
 
-app = Flask(__name__, static_folder='static', template_folder='templates')
+# === Configuration Telegram ===
+TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN", "7473580823:AAHlqSw9noRCHDP4S2x2akrz3iJubVH74iI")
+TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID", "@Sisu1013")
 
-# === Paramètres Telegram ===
-TELEGRAM_BOT_TOKEN = "7403862599:AAERC-FuhFQJyJERnJ8Zf-pE_FogHGVcc00"
-TELEGRAM_CHAT_ID = "@saveurdebabi_bot"  # ou un ID de groupe (ex: -1001234567890)
-
-# === URL de l'API Telegram ===
-def send_telegram_message(message):
-    url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage" 
-    data = {
-        "chat_id": TELEGRAM_CHAT_ID,
-        "text": message,
-        "parse_mode": "Markdown"
-    }
-    try:
-        response = requests.post(url, data=data)
-        print("✅ Message Telegram envoyé :", response.json())
-    except Exception as e:
-        print("❌ Échec d'envoi Telegram", str(e))
+# === Initialisation de l'application Flask ===
+app = Flask(__name__)
 
 @app.route('/')
 def index():
@@ -27,6 +15,7 @@ def index():
 
 @app.route('/commander', methods=['POST'])
 def commander():
+    # Récupère les données du formulaire
     nom = request.form.get('nom')
     telephone = request.form.get('telephone')
     quantite = request.form.get('quantite') or "1"
@@ -40,16 +29,27 @@ def commander():
     print(f"Boisson : {boisson}")
     print("===========================")
 
-    # Création du message Telegram
+    # Prépare le message Telegram
     message = "*Nouvelle commande reçue !*\n\n"
     message += f"Client : {nom}\n"
     message += f"Téléphone : {telephone}\n"
     message += f"Plats : {', '.join(plats)} x{quantite}\n"
     message += f"Boisson : {boisson}"
 
-    # Envoi via Telegram
-    send_telegram_message(message)
+    # Envoie via Telegram
+    try:
+        url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage" 
+        data = {
+            "chat_id": TELEGRAM_CHAT_ID,
+            "text": message,
+            "parse_mode": "Markdown"
+        }
+        response = requests.post(url, data=data)
+        print("✅ Message envoyé sur Telegram", response.json())
+    except Exception as e:
+        print("❌ Échec d'envoi Telegram", str(e))
 
+    # Réponse au client
     return """
         <h2>Merci pour votre commande !</h2>
         <p>Nous vous contacterons bientôt.</p>
