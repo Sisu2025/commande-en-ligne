@@ -7,7 +7,7 @@ TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN", "7149326306:AAHKTAJYiHwr2Vs
 TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID", "5033835311")
 
 # === Création de l'application Flask ===
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static', template_folder='templates')
 
 @app.route('/')
 def index():
@@ -82,6 +82,7 @@ def commander():
         "Ignames grillés": 1000
     }
 
+    # Calcul du total
     total = 0
     plats_avec_quantite = []
 
