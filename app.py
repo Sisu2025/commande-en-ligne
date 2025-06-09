@@ -1,3 +1,19 @@
+from flask import Flask, render_template, request
+import os
+import requests
+
+# === Configuration Telegram ===
+TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN", "7149326306:AAHKTAJYiHwr2VsRiRPyfkp4U2Ry-VY4Uyw")
+TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID", "5033835311")
+
+# === Création de l'application Flask ===
+app = Flask(__name__)
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+
 @app.route('/commander', methods=['POST'])
 def commander():
     nom = request.form.get('nom')
@@ -5,16 +21,16 @@ def commander():
     supplement = request.form.get('supplement') or "Aucun"
     boisson = request.form.get('boisson') or "Aucune"
 
-    # Gestion de la quantité
+    # Gestion de la quantité (avec erreur possible)
     try:
         quantite = int(request.form.get('quantite', '1'))
     except ValueError:
         quantite = 1
 
-    # Récupération des plats
+    # Récupère tous les plats sélectionnés
     plats_bruts = request.form.getlist('plats[]')
 
-    # Nettoyage des noms de plat
+    # Nettoie les noms des plats en retirant le prix
     plats = []
     for plat in plats_bruts:
         clean_plat = plat.split(" -")[0].strip()
@@ -27,7 +43,7 @@ def commander():
     print(f"Plats : {', '.join(plats)}")
     print(f"Quantité : {quantite}")
     print(f"Boisson : {boisson}")
-    print(f"Informations complémentaires : {supplement}")
+    print(f"Informations supplémentaires : {supplement}")
     print("===========================")
 
     # Dictionnaire des prix
@@ -66,7 +82,6 @@ def commander():
         "Ignames grillés": 1000
     }
 
-    # Calcul du total
     total = 0
     plats_avec_quantite = []
 
@@ -89,7 +104,7 @@ def commander():
     message += f"Informations complémentaires : {supplement}"
 
     try:
-        url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage" 
+        url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"    
         data = {
             "chat_id": TELEGRAM_CHAT_ID,
             "text": message,
@@ -108,3 +123,14 @@ def commander():
         <p>Nous vous contacterons bientôt.</p>
         <a href="/">Retour au menu</a>
     """
+
+
+if __name__ == '__main__':
+    import os
+    if os.getenv("FLASK_ENV") == "production" or os.getenv("WERKZEUG_RUN_MAIN") == "true":
+        from waitress import serve
+        print("🚀 Démarrage en mode production avec Waitress")
+        serve(app, host='0.0.0.0', port=8000)
+    else:
+        print("🔧 Démarrage en mode développement")
+        app.run(debug=True, host='0.0.0.0', port=8000)
