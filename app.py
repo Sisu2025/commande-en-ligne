@@ -3,10 +3,10 @@ import os
 import requests
 
 # === Configuration Telegram ===
-TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN", "7473580823:AAHlqSw9noRCHDP4S2x2akrz3iJubVH74iI")
-TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID", "@Sisu1013")
+TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN", "7149326306:AAHKTAJYiHwr2VsRiRPyfkp4U2Ry-VY4Uyw")
+TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID", "5033835311")  # Ton ID personnel trouvé dans getUpdates
 
-# === Initialisation de l'application Flask ===
+# === Création de l'application Flask ===
 app = Flask(__name__)
 
 @app.route('/')
@@ -45,9 +45,12 @@ def commander():
             "parse_mode": "Markdown"
         }
         response = requests.post(url, data=data)
-        print("✅ Message envoyé sur Telegram", response.json())
+        if response.status_code == 200 and response.json().get("ok"):
+            print("✅ Message envoyé sur Telegram")
+        else:
+            print("❌ Échec d'envoi Telegram - Réponse :", response.json())
     except Exception as e:
-        print("❌ Échec d'envoi Telegram", str(e))
+        print("🚨 Erreur lors de l'envoi Telegram :", str(e))
 
     # Réponse au client
     return """
@@ -55,3 +58,7 @@ def commander():
         <p>Nous vous contacterons bientôt.</p>
         <a href="/">Retour au menu</a>
     """
+
+if __name__ == '__main__':
+    from waitress import serve
+    serve(app, host='0.0.0.0', port=8000)
