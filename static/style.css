@@ -1,8 +1,20 @@
 /* style.css */
 
+/* Couleurs principales */
+:root {
+    --primary-color: #FF5733; /* 🔹 Orange vif */
+    --secondary-color: #FFFFFF; /* ◼ Blanc pur */
+    --text-color: #000000; /* ◼ Noir pour le texte */
+    --accent-color: #FFC107; /* 🔶 Orange clair pour les boutons */
+    --background-color: #FFE0B2; /* 🟧 Fond légèrement orange */
+    --green-color: #8ac926; /* 🟢 Vert clair – rappel de la Côte d'Ivoire */
+}
+
+/* Style global */
 body {
     font-family: 'Segoe UI', sans-serif;
-    background-color: #fff8f0; /* Fond crème */
+    background-color: var(--background-color);
+    color: var(--text-color);
     margin: 0;
     padding: 20px;
 }
@@ -14,12 +26,12 @@ body {
     padding: 30px;
     border-radius: 12px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    border-left: 5px solid #f77f00;
-    border-right: 5px solid #f77f00;
+    border-left: 5px solid var(--primary-color);
+    border-right: 5px solid var(--primary-color);
 }
 
 #titre-site {
-    color: #f77f00; /* Orange vif */
+    color: var(--primary-color); /* 🔹 Orange vif */
     text-align: center;
     font-size: 2.8em;
     font-weight: bold;
@@ -27,13 +39,19 @@ body {
 }
 
 #sous-titre {
-    color: #8ac926; /* Vert clair – rappel de la Côte d’Ivoire */
+    color: var(--green-color); /* 🟢 Vert clair */
     text-align: center;
     font-size: 1.2em;
     font-style: italic;
     margin-bottom: 30px;
 }
 
+p {
+    text-align: center;
+    color: var(--text-color);
+}
+
+/* Formulaire */
 form {
     display: flex;
     flex-direction: column;
@@ -42,7 +60,7 @@ form {
 label {
     font-weight: bold;
     margin-bottom: 5px;
-    color: #333;
+    color: var(--text-color);
 }
 
 input, select, textarea {
@@ -51,19 +69,37 @@ input, select, textarea {
     border: 1px solid #ccc;
     border-radius: 6px;
     font-size: 1rem;
+    width: 100%;
+    box-sizing: border-box;
 }
 
+/* Bouton principal */
 button {
-    background-color: #fcbf49;
-    color: white;
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
     border: none;
     cursor: pointer;
     transition: background 0.3s ease;
     padding: 12px;
     font-size: 1.1em;
     border-radius: 6px;
+    font-weight: bold;
 }
 
 button:hover {
-    background-color: #f77f00;
+    background-color: var(--accent-color);
+}
+
+/* Liste des plats stylisée */
+select[multiple] {
+    height: 150px;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid var(--primary-color);
+    border-radius: 6px;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 60px;
 }
