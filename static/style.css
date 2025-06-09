@@ -1,16 +1,14 @@
 /* style.css */
 
-/* Couleurs principales */
 :root {
     --primary-color: #FF5733; /* 🔹 Orange vif */
     --secondary-color: #FFFFFF; /* ◼ Blanc pur */
     --text-color: #000000; /* ◼ Noir pour le texte */
-    --accent-color: #FFC107; /* 🔶 Orange clair pour les boutons */
-    --background-color: #FFE0B2; /* 🟧 Fond légèrement orange */
-    --green-color: #8ac926; /* 🟢 Vert clair – rappel de la Côte d'Ivoire */
+    --accent-color: #FFC107; /* 🔶 Orange clair pour les accents */
+    --background-color: #FFF8F0; /* 🟪 Fond crème léger */
+    --green-color: #8ac926; /* 🟢 Vert clair – rappel de l’identité ivoirienne */
 }
 
-/* Style global */
 body {
     font-family: 'Segoe UI', sans-serif;
     background-color: var(--background-color);
@@ -31,7 +29,7 @@ body {
 }
 
 #titre-site {
-    color: var(--primary-color); /* 🔹 Orange vif */
+    color: var(--primary-color);
     text-align: center;
     font-size: 2.8em;
     font-weight: bold;
@@ -39,7 +37,7 @@ body {
 }
 
 #sous-titre {
-    color: var(--green-color); /* 🟢 Vert clair */
+    color: var(--green-color);
     text-align: center;
     font-size: 1.2em;
     font-style: italic;
@@ -51,7 +49,6 @@ p {
     color: var(--text-color);
 }
 
-/* Formulaire */
 form {
     display: flex;
     flex-direction: column;
@@ -73,7 +70,6 @@ input, select, textarea {
     box-sizing: border-box;
 }
 
-/* Bouton principal */
 button {
     background-color: var(--primary-color);
     color: var(--secondary-color);
@@ -90,7 +86,6 @@ button:hover {
     background-color: var(--accent-color);
 }
 
-/* Liste des plats stylisée */
 select[multiple] {
     height: 150px;
     padding: 10px;
