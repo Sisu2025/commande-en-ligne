@@ -1,26 +1,34 @@
-from flask import Flask, render_template, request
-import os
-import requests
-
-# === Configuration Telegram ===
-TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN", "7149326306:AAHKTAJYiHwr2VsRiRPyfkp4U2Ry-VY4Uyw")
-TELEGRAM_CHAT_ID = os.getenv("TELEDERMA_CHAT_ID", "5033835311")
-
-# === Création de l'application Flask ===
-app = Flask(__name__)
-
-@app.route('/')
-def index():
-    return render_template('index.html')
-
 @app.route('/commander', methods=['POST'])
 def commander():
     nom = request.form.get('nom')
     telephone = request.form.get('telephone')
     supplement = request.form.get('supplement') or "Aucun"
     boisson = request.form.get('boisson') or "Aucune"
-    plats = request.form.getlist('plats[]')
-    quantite = int(request.form.get('quantite', 1))
+
+    # Gestion de la quantité
+    try:
+        quantite = int(request.form.get('quantite', '1'))
+    except ValueError:
+        quantite = 1
+
+    # Récupération des plats
+    plats_bruts = request.form.getlist('plats[]')
+
+    # Nettoyage des noms de plat
+    plats = []
+    for plat in plats_bruts:
+        clean_plat = plat.split(" -")[0].strip()
+        if clean_plat:
+            plats.append(clean_plat)
+
+    print("=== NOUVELLE COMMANDE ===")
+    print(f"Nom : {nom}")
+    print(f"Téléphone : {telephone}")
+    print(f"Plats : {', '.join(plats)}")
+    print(f"Quantité : {quantite}")
+    print(f"Boisson : {boisson}")
+    print(f"Informations complémentaires : {supplement}")
+    print("===========================")
 
     # Dictionnaire des prix
     plats_prix = {
@@ -64,22 +72,11 @@ def commander():
 
     for plat in plats:
         if plat in plats_prix:
-            plat_nom = plat
             plat_prix = plats_prix[plat]
             total += plat_prix * quantite
-            plats_avec_quantite.append(f"{plat_nom} x{quantite} = {plat_prix * quantite} FCFA")
+            plats_avec_quantite.append(f"{plat} x{quantite} = {plat_prix * quantite} FCFA")
         else:
             print(f"⚠️ Plat non reconnu : {plat}")
-
-    print("=== NOUVELLE COMMANDE ===")
-    print(f"Nom : {nom}")
-    print(f"Téléphone : {telephone}")
-    print(f"Plats : {', '.join(plats)}")
-    print(f"Quantité : {quantite}")
-    print(f"Boisson : {boisson}")
-    print(f"Informations supplémentaires : {supplement}")
-    print(f"Total : {total} FCFA")
-    print("===========================")
 
     # Envoi Telegram
     message = "*Nouvelle commande reçue !*\n\n"
@@ -99,16 +96,15 @@ def commander():
             "parse_mode": "Markdown"
         }
         response = requests.post(url, data=data)
-        print("✅ Message envoyé via Telegram", response.json())
+        if response.status_code == 200 and response.json().get("ok"):
+            print("✅ Message envoyé via Telegram")
+        else:
+            print("❌ Échec d'envoi Telegram", response.json())
     except Exception as e:
-        print("❌ Échec d'envoi Telegram", str(e))
+        print("🚨 Erreur lors de l'envoi Telegram :", str(e))
 
     return """
         <h2>Merci pour votre commande !</h2>
         <p>Nous vous contacterons bientôt.</p>
         <a href="/">Retour au menu</a>
     """
-
-if __name__ == '__main__':
-    from waitress import serve
-    serve(app, host='0.0.0.0', port=8000)
