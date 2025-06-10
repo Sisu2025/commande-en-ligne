@@ -5,7 +5,7 @@ import requests
 # === Configuration Telegram ===
 TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN", "7149326306:AAHKTAJYiHwr2VsRiRPyfkp4U2Ry-VY4Uyw")
 TELEGRAM_CHAT_ID_1 = os.getenv("TELEGRAM_CHAT_ID_1", "5033835311")  # Premier compte
-TELEGRAM_CHAT_ID_2 = os.getenv("TELEGRAM_CHAT_ID_2", "7591845004")  # Deuxième compte
+TELEGRAM_CHAT_ID_2 = os.getenv("TELEGRAM_CHAT_ID_2", "7591845004")    # Deuxième compte
 
 # === Dictionnaire des frais de livraison (par ordre alphabétique) ===
 frais_livraison = {
@@ -58,6 +58,21 @@ def send_telegram_message(message, chat_id):
             print(f"❌ Échec d'envoi à {chat_id} - Erreur :", error.get("description", "Inconnue"))
     except Exception as e:
         print(f"🚨 Erreur lors de l'envoi à {chat_id} :", str(e))
+
+
+# === Vérifie si le bot peut envoyer un message à cet utilisateur ===
+def can_send_message(chat_id):
+    url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/getChat" 
+    data = {"chat_id": chat_id}
+    try:
+        response = requests.post(url, data=data)
+        if response.status_code == 200 and response.json().get("ok"):
+            return response.json()["result"].get("can_write_to_peer", False)
+        else:
+            print(f"🚫 Ne peut pas écrire à {chat_id} - Réponse API:", response.json())
+    except Exception as e:
+        print(f"🚨 Impossible de vérifier si on peut écrire à {chat_id} :", str(e))
+    return False
 
 
 @app.route('/')
@@ -225,8 +240,10 @@ def commander():
     # Envoie à chaque chat ID
     send_telegram_message(message, TELEGRAM_CHAT_ID_1)
     
-    if TELEGRAM_CHAT_ID_2 and str(TELEGRAM_CHAT_ID_2).strip() != "":
+    if can_send_message(TELEGRAM_CHAT_ID_2):
         send_telegram_message(message, TELEGRAM_CHAT_ID_2)
+    else:
+        print("⚠️ Aucun message envoyé à TELEGRAM_CHAT_ID_2")
 
     return """
         <h2>Merci pour votre commande !</h2>
