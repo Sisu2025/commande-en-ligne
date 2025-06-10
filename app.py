@@ -43,7 +43,7 @@ app = Flask(__name__, static_folder='static', template_folder='templates')
 
 # === Fonction d'envoi Telegram ===
 def send_telegram_message(message, chat_id):
-    url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"    
+    url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"       
     data = {
         "chat_id": chat_id,
         "text": message,
@@ -54,7 +54,8 @@ def send_telegram_message(message, chat_id):
         if response.status_code == 200 and response.json().get("ok"):
             print(f"✅ Message envoyé à {chat_id}")
         else:
-            print(f"❌ Échec d'envoi à {chat_id} - Réponse :", response.json())
+            error = response.json()
+            print(f"❌ Échec d'envoi à {chat_id} - Erreur :", error.get("description", "Inconnue"))
     except Exception as e:
         print(f"🚨 Erreur lors de l'envoi à {chat_id} :", str(e))
 
@@ -153,15 +154,6 @@ def commander():
         "frites au poulet sauté": 4000
     }
 
-    # Dictionnaire des accompagnements avec leurs prix
-    accompagnements_prix = {
-        "Riz": 1000,
-        "Ignames grillés": 1000,
-        "Claclo": 1000,
-        "Attieké huile rouge": 630,
-        "Alloco": 1000
-    }
-
     # Calcul du total des plats
     total_plats = 0
     plats_avec_quantite = []
@@ -232,7 +224,9 @@ def commander():
 
     # Envoie à chaque chat ID
     send_telegram_message(message, TELEGRAM_CHAT_ID_1)
-    send_telegram_message(message, TELEGRAM_CHAT_ID_2)
+    
+    if TELEGRAM_CHAT_ID_2 and str(TELEGRAM_CHAT_ID_2).strip() != "":
+        send_telegram_message(message, TELEGRAM_CHAT_ID_2)
 
     return """
         <h2>Merci pour votre commande !</h2>
