@@ -8,7 +8,8 @@
 <body>
     <div class="container">
         <h1 id="titre-site">SAVEUR DE BABI</h1>
-        <h2 id="sous-titre">Épicé et bien assaisonné — La bonne bouffe en ligne</h2>
+        <h2 id="sous-titre">LA QUALITE AU MEILLEUR PRIX  — LA QUALITE AU MEILLEUR PRIX </h2>
+		<h3 id="sous-titre">Épicé et bien assaisonné — La bonne bouffe en ligne</h3>
 
         <p style="text-align: center;">📞 +225 07 89 55 32 10</p>
 
@@ -68,11 +69,45 @@
                 <option value="Bières locales – 1500 FCFA">Bières locales – 1500 FCFA</option>
             </select><br><br>
 
+            <!-- Champ quartier -->
+            <label for="quartier">Votre quartier :</label><br>
+            <select name="quartier" id="quartier" required>
+                <option value="">Sélectionnez votre quartier</option>
+                <option value="Plateau">Plateau</option>
+                <option value="Cocody">Cocody</option>
+                <option value="Yopougon">Yopougon</option>
+                <option value="Adjamé">Adjamé</option>
+                <option value="Treichville">Treichville</option>
+                <option value="Marcory">Marcory</option>
+                <option value="Abobo">Abobo</option>
+                <option value="Attécoubé">Attécoubé</option>
+                <option value="Autre">Autre (précisez)</option>
+            </select><br><br>
+
+            <!-- Champ texte si quartier = Autre -->
+            <div id="autre-quartier" style="display: none;">
+                <label for="quartier-autre">Précisez votre quartier :</label><br>
+                <input type="text" id="quartier-autre" name="quartier_autre"><br><br>
+            </div>
+
             <label for="supplement">Informations supplémentaires (allergies, préférences, etc.) :</label><br>
             <textarea id="supplement" name="supplement" rows="4" placeholder="Exemple : Je suis allergique aux arachides."></textarea><br><br>
 
             <button type="submit">Passer ma commande</button>
         </form>
     </div>
+
+    <script>
+        // Gère l'affichage du champ "Quartier autre"
+        document.getElementById("quartier").addEventListener("change", function () {
+            const autreInput = document.getElementById("autre-quartier");
+            if (this.value === "Autre") {
+                autreInput.style.display = "block";
+            } else {
+                document.getElementById("quartier-autre").value = "";
+                autreInput.style.display = "none";
+            }
+        });
+    </script>
 </body>
 </html>
