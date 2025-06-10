@@ -6,18 +6,18 @@ import requests
 TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN", "7149326306:AAHKTAJYiHwr2VsRiRPyfkp4U2Ry-VY4Uyw")
 TELEGRAM_CHAT_ID_1 = os.getenv("TELEGRAM_CHAT_ID_1", "5033835311")  # Premier compte
 TELEGRAM_CHAT_ID_2 = os.getenv("TELEGRAM_CHAT_ID_2", "7591845004")    # Deuxième compte
-WHATSAPP_RECEIVER = os.getenv("WHATSAPP_RECEIVER", "2250789553210")     # Numéro WhatsApp du destinataire
 
 # === Dictionnaire des frais de livraison (par ordre alphabétique) ===
 frais_livraison = {
     "Abatta": 1500,
-    "Abobo": 1500,
+    "Abobo": 1500,	
     "Adjamé": 2000,
     "Angre": 1000,
     "Attécoubé": 2000,
     "Bingerville": 2000,
     "Cocody": 1500,
     "Deux plateaux": 1500,
+    "plateau dokui": 1500,
     "Koumassi": 2500,
     "Marcory": 2500,
     "Plateau": 2000,
@@ -34,7 +34,7 @@ accompagnements_prix = {
     "Riz": 1000,
     "Ignames grillés": 1000,
     "Claclo": 1000,
-    "Attieké huile rouge": 630,
+    "Attieké huile rouge": 1000,
     "Alloco": 1000
 }
 
@@ -61,7 +61,7 @@ def send_telegram_message(message, chat_id):
         print(f"🚨 Erreur lors de l'envoi à {chat_id} :", str(e))
 
 
-# === Vérifie si le bot peut envoyer un message à cet utilisateur ===
+# === Vérifie si le bot peut écrire à ce chat ID ===
 def can_send_message(chat_id):
     url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/getChat"    
     data = {"chat_id": chat_id}
@@ -74,27 +74,6 @@ def can_send_message(chat_id):
     except Exception as e:
         print(f"🚨 Impossible de vérifier si on peut écrire à {chat_id} :", str(e))
     return False
-
-
-# === Fonction d'envoi WhatsApp ===
-def send_whatsapp_message(message, phone_number):
-    url = "https://textbelt.com/whatsapp" 
-    data = {
-        "number": phone_number,
-        "message": message,
-        "key": "textbelt"  # Clé gratuite – idéale pour les tests
-    }
-    try:
-        response = requests.post(url, data=data)
-        result = response.json()
-        print(f"📨 Réponse WhatsApp ({phone_number}) :", result)
-
-        if result.get("success"):
-            print("✅ Message WhatsApp envoyé avec succès")
-        else:
-            print("❌ Échec d'envoi WhatsApp")
-    except Exception as e:
-        print("🚨 Erreur lors de l'envoi WhatsApp :", str(e))
 
 
 @app.route('/')
@@ -217,13 +196,9 @@ def commander():
 
     # Prix de la boisson
     if "Coca Cola" in boisson:
-        prix_boisson = 1000
-    elif "Jus naturel" in boisson:
-        prix_boisson = 1500
+        prix_boisson = 500
     elif "Eau 1.5L" in boisson:
         prix_boisson = 1000
-    elif "Bières locales" in boisson:
-        prix_boisson = 1500
     else:
         prix_boisson = 0
 
@@ -231,64 +206,41 @@ def commander():
     total = total_plats + total_accompagnements + livraison + prix_boisson
 
     # Prépare le message pour Telegram
-    telegram_message = "*Nouvelle commande reçue !*\n\n"
-    telegram_message += f"Client : {nom}\n"
-    telegram_message += f"Téléphone : {telephone}\n\n"
+    message = "*Nouvelle commande reçue !*\n\n"
+    message += f"Client : {nom}\n"
+    message += f"Téléphone : {telephone}\n\n"
 
+    # Plats sélectionnés
+    message += "Plats sélectionnés :\n"
     if plats_avec_quantite:
-        telegram_message += "Plats sélectionnés :\n"
-        telegram_message += "- " + "\n- ".join(plats_avec_quantite) + "\n\n"
+        message += "- " + "\n- ".join(plats_avec_quantite) + "\n\n"
     else:
-        telegram_message += "Aucun plat sélectionné.\n\n"
+        message += "Aucun plat sélectionné.\n\n"
 
+    # Accompagnements sélectionnés
     if acompaniments_avec_quantite:
-        telegram_message += "Accompagnements sélectionnés :\n"
-        telegram_message += "- " + "\n- ".join(acompaniments_avec_quantite) + "\n\n"
+        message += "Accompagnements sélectionnés :\n"
+        message += "- " + "\n- ".join(acompaniments_avec_quantite) + "\n\n"
 
-    telegram_message += f"Boisson : {boisson}\n"
-    telegram_message += f"Livraison ({quartier_final}) : {livraison} FCFA\n"
-    telegram_message += f"*Prix total : {total} FCFA*\n"
-    telegram_message += f"Informations complémentaires : {supplement}"
+    # Boisson
+    message += f"Boisson : {boisson}\n\n"
+
+    # Livraison
+    message += f"Livraison ({quartier_final}) : {livraison} FCFA\n"
+
+    # Total
+    message += f"*Prix total : {total} FCFA*\n"
+
+    # Informations supplémentaires
+    message += f"Informations complémentaires : {supplement}"
 
     # Envoie à chaque chat ID Telegram
-    send_telegram_message(telegram_message, TELEGRAM_CHAT_ID_1)
+    send_telegram_message(message, TELEGRAM_CHAT_ID_1)
     
     if can_send_message(TELEGRAM_CHAT_ID_2):
-        send_telegram_message(telegram_message, TELEGRAM_CHAT_ID_2)
+        send_telegram_message(message, TELEGRAM_CHAT_ID_2)
     else:
         print("⚠️ Aucun message envoyé à TELEGRAM_CHAT_ID_2")
-
-    # Prépare le message pour WhatsApp (sans Markdown)
-    whatsapp_message = """
-🔔 NOUVELLE COMMANDE – Saveur de Babi
-
-CLIENT : {nom}
-TELEPHONE : {telephone}
-
-PLATS :
-{plats}
-
-ACCOMPAGNEMENTS :
-{acompaniments}
-
-BOISSON : {boisson}
-FRAIS DE LIVRAISON : {livraison} FCFA
-TOTAL : {total} FCFA
-
-INFORMATIONS SUPPLÉMENTAIRES : {supplement}
-""".format(
-        nom=nom,
-        telephone=telephone,
-        plats="\n".join([f"- {p}" for p in plats]),
-        acompanionments=", ".join(accompagnements) if accompagnements else "Aucun",
-        boisson=boisson,
-        livraison=livraison,
-        total=total,
-        supplement=supplement
-    )
-
-    # Envoie via WhatsApp
-    send_whatsapp_message(whatsapp_message, WHATSAPP_RECEIVER)
 
     return """
         <h2>Merci pour votre commande !</h2>
