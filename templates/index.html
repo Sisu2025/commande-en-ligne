@@ -8,8 +8,8 @@
 <body>
     <div class="container">
         <h1 id="titre-site">SAVEUR DE BABI</h1>
-        <h2 id="sous-titre">LA QUALITE AU MEILLEUR PRIX  — LA QUALITE AU MEILLEUR PRIX </h2>
-		<h3 id="sous-titre">Épicé et bien assaisonné — La bonne bouffe en ligne</h3>
+        <h2 id="sous-titre">LA QUALITE AU MEILLEUR PRIX</h2>
+        <h3 id="sous-titre">Épicé et bien assaisonné — La bonne bouffe en ligne</h3>
 
         <p style="text-align: center;">📞 +225 07 89 55 32 10</p>
 
@@ -60,15 +60,6 @@
             <label for="telephone">Votre téléphone :</label><br>
             <input type="tel" id="telephone" name="telephone" required><br><br>
 
-            <label for="boisson">Boisson (facultatif) :</label><br>
-            <select name="boisson" id="boisson">
-                <option value="Aucune">Aucune</option>
-                <option value="Coca Cola – 1000 FCFA">Coca Cola – 1000 FCFA</option>
-                <option value="Jus naturel – 1500 FCFA">Jus naturel – 1500 FCFA</option>
-                <option value="Eau 1.5L – 1000 FCFA">Eau 1.5L – 1000 FCFA</option>
-                <option value="Bières locales – 1500 FCFA">Bières locales – 1500 FCFA</option>
-            </select><br><br>
-
             <!-- Champ quartier -->
             <label for="quartier">Votre quartier :</label><br>
             <select name="quartier" id="quartier" required>
@@ -89,6 +80,25 @@
                 <label for="quartier-autre">Précisez votre quartier :</label><br>
                 <input type="text" id="quartier-autre" name="quartier_autre"><br><br>
             </div>
+
+            <!-- Champ accompagnements -->
+            <label for="accompagnement">Accompagnements ou compléments (facultatif) :</label><br>
+            <select name="accompagnements[]" id="accompagnement" multiple size="5">
+                <option value="Riz - 1000 FCFA">Riz – 1000 FCFA</option>
+                <option value="Ignames grillés - 1000 FCFA">Ignames grillés – 1000 FCFA</option>
+                <option value="Claclo - 1000 FCFA">Claclo – 1000 FCFA</option>
+                <option value="Attieké huile rouge - 630 FCFA">Attieké huile rouge – 630 FCFA</option>
+                <option value="Alloco - 1000 FCFA">Alloco – 1000 FCFA</option>
+            </select><br><br>
+
+            <label for="boisson">Boisson (facultatif) :</label><br>
+            <select name="boisson" id="boisson">
+                <option value="Aucune">Aucune</option>
+                <option value="Coca Cola – 1000 FCFA">Coca Cola – 1000 FCFA</option>
+                <option value="Jus naturel – 1500 FCFA">Jus naturel – 1500 FCFA</option>
+                <option value="Eau 1.5L – 1000 FCFA">Eau 1.5L – 1000 FCFA</option>
+                <option value="Bières locales – 1500 FCFA">Bières locales – 1500 FCFA</option>
+            </select><br><br>
 
             <label for="supplement">Informations supplémentaires (allergies, préférences, etc.) :</label><br>
             <textarea id="supplement" name="supplement" rows="4" placeholder="Exemple : Je suis allergique aux arachides."></textarea><br><br>
