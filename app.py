@@ -4,10 +4,30 @@ import requests
 
 # === Configuration Telegram ===
 TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN", "7149326306:AAHKTAJYiHwr2VsRiRPyfkp4U2Ry-VY4Uyw")
-TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID", "5033835311")
+TELEGRAM_CHAT_ID_1 = os.getenv("TELEGRAM_CHAT_ID_1", "5033835311")  # Premier compte
+TELEGRAM_CHAT_ID_2 = os.getenv("TELEGRAM_CHAT_ID_2", "7591845004")  # Deuxième compte
 
 # === Création de l'application Flask ===
 app = Flask(__name__, static_folder='static', template_folder='templates')
+
+
+# === Fonction d'envoi Telegram ===
+def send_telegram_message(message, chat_id):
+    url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage" 
+    data = {
+        "chat_id": chat_id,
+        "text": message,
+        "parse_mode": "Markdown"
+    }
+    try:
+        response = requests.post(url, data=data)
+        if response.status_code == 200 and response.json().get("ok"):
+            print(f"✅ Message envoyé à {chat_id}")
+        else:
+            print(f"❌ Échec d'envoi à {chat_id} - Réponse :", response.json())
+    except Exception as e:
+        print(f"🚨 Erreur lors de l'envoi à {chat_id} :", str(e))
+
 
 @app.route('/')
 def index():
@@ -94,7 +114,7 @@ def commander():
         else:
             print(f"⚠️ Plat non reconnu : {plat}")
 
-    # Envoi Telegram
+    # Prépare le message Telegram
     message = "*Nouvelle commande reçue !*\n\n"
     message += f"Client : {nom}\n"
     message += f"Téléphone : {telephone}\n\n"
@@ -104,20 +124,9 @@ def commander():
     message += f"Boisson : {boisson}\n"
     message += f"Informations complémentaires : {supplement}"
 
-    try:
-        url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"    
-        data = {
-            "chat_id": TELEGRAM_CHAT_ID,
-            "text": message,
-            "parse_mode": "Markdown"
-        }
-        response = requests.post(url, data=data)
-        if response.status_code == 200 and response.json().get("ok"):
-            print("✅ Message envoyé via Telegram")
-        else:
-            print("❌ Échec d'envoi Telegram", response.json())
-    except Exception as e:
-        print("🚨 Erreur lors de l'envoi Telegram :", str(e))
+    # Envoie à chaque chat ID
+    send_telegram_message(message, TELEGRAM_CHAT_ID_1)
+    send_telegram_message(message, TELEGRAM_CHAT_ID_2)
 
     return """
         <h2>Merci pour votre commande !</h2>
