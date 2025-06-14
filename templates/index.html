@@ -17,48 +17,197 @@
             <label for="nom">Votre nom :</label><br>
             <input type="text" id="nom" name="nom" required><br><br>
 
+            <!-- Plats avec quantité individuelle -->
             <label>Choisissez vos plats :</label><br>
-            <select name="plats[]" id="plat" multiple size="6" required>
-                <option value="Bourgignon sauté à la moutarde - 4000 FCFA">Bourgignon sauté à la moutarde – 4000 FCFA</option>
-                <option value="Bourgignon sauté aux légumes avec le riz - 6000 FCFA">Bourgignon sauté aux légumes avec le riz – 6000 FCFA</option>
-                <option value="Soupe de carpe avec attiéké - 4000 FCFA">Soupe de carpe avec attiéké – 4000 FCFA</option>
-                <option value="Soupe du pêcheur avec attiéké - 6000 FCFA">Soupe du pêcheur avec attiéké – 6000 FCFA</option>
-                <option value="Poulet au gingembre - 3500 FCFA">Poulet au gingembre – 3500 FCFA</option>
-                <option value="Demi Poulet - 3500 FCFA">Demi Poulet – 3500 FCFA</option>
-                <option value="Demi Poulet Pané - 3500 FCFA">Demi Poulet Pané – 3500 FCFA</option>
-                <option value="Kedjenou de Poulet - 3500 FCFA">Kedjenou de Poulet – 3500 FCFA</option>
-                <option value="Spaghetti au bourguignon - 4000 FCFA">Spaghetti au bourguignon – 4000 FCFA</option>
-                <option value="Attieké Poisson sole frit - 2500 FCFA">Attieké Poisson sole frit – 2500 FCFA</option>
-                <option value="Spaghetti aux boulettes - 4000 FCFA">Spaghetti aux boulettes – 4000 FCFA</option>
-                <option value="Spaghetti au poulet - 4500 FCFA">Spaghetti au poulet – 4500 FCFA</option>
-                <option value="Attieké poulet - 3000 FCFA">Attieké poulet – 3000 FCFA</option>
-                <option value="Ignames grillés au poisson - 4000 FCFA">Ignames grillés au poisson – 4000 FCFA</option>
-                <option value="Ragoût d'ignames au boeuf - 4500 FCFA">Ragoût d'ignames au boeuf – 4500 FCFA</option>
-                <option value="Ragoût d'ignames au poulet - 4500 FCFA">Ragoût d'ignames au poulet – 4500 FCFA</option>
-                <option value="Ragoût de pomme de terre au boeuf - 4500 FCFA">Ragoût de pomme de terre au boeuf – 4500 FCFA</option>
-                <option value="Petit Pois à la viande de bœuf - 4500 FCFA">Petit Pois à la viande de bœuf – 4500 FCFA</option>
-                <option value="Petit Pois aux boulettes - 4500 FCFA">Petit Pois aux boulettes – 4500 FCFA</option>
-                <option value="Petit Pois au poulet - 4500 FCFA">Petit Pois au poulet – 4500 FCFA</option>
-                <option value="Pomme de terre sautée au petit pois - 6500 FCFA">Pomme de terre sautée au petit pois – 6500 FCFA</option>
-                <option value="Pomme de terre sautée au bourguignon - 4500 FCFA">Pomme de terre sautée au bourguignon – 4500 FCFA</option>
-                <option value="Soupe légumes maison - 3000 FCFA">Soupe légumes maison – 3000 FCFA</option>
-                <option value="Boulettes sautées - 4000 FCFA">Boulettes sautées – 4000 FCFA</option>
-                <option value="Alloco aux oeufs - 2500 FCFA">Alloco aux oeufs – 2500 FCFA</option>
-                <option value="Alloco au poulet - 3500 FCFA">Alloco au poulet – 3500 FCFA</option>
-                <option value="frites aux Boulettes sautées - 4500 FCFA">Frites aux Boulettes sautées – 4500 FCFA</option>
-                <option value="frites au poulet sauté - 4000 FCFA">Frites au poulet sauté – 4000 FCFA</option>
-                <option value="Attieké huile rouge - 630 FCFA">Attieké huile rouge – 630 FCFA</option>
-                <option value="Riz - 1000 FCFA">Riz – 1000 FCFA</option>
-                <option value="Claclo - 1000 FCFA">Claclo – 1000 FCFA</option>
-                <option value="Alloco - 1000 FCFA">Alloco – 1000 FCFA</option>
-                <option value="Ignames grillés - 1000 FCFA">Ignames grillés – 1000 FCFA</option>
-            </select><br><br>
 
-            <label for="quantite">Quantité souhaitée (pour tous les plats choisis) :</label><br>
-            <input type="number" id="quantite" name="quantite" min="1" value="1"><br><br>
+            <!-- Plat : Bourgignon sauté à la moutarde -->
+            <div class="plat-item">
+                <input type="checkbox" id="Bourgignon_sauté_à_la_moutarde" name="plats[]" value="Bourgignon sauté à la moutarde - 4000 FCFA">
+                <label for="Bourgignon_sauté_à_la_moutarde">Bourgignon sauté à la moutarde – 4000 FCFA</label><br>
+                <input type="number" name="quantite[Bourgignon sauté à la moutarde]" min="0" value="0"><br><br>
+            </div>
 
-            <label for="telephone">Votre téléphone :</label><br>
-            <input type="tel" id="telephone" name="telephone" required><br><br>
+            <!-- Plat : Bourgignon sauté aux légumes avec le riz -->
+            <div class="plat-item">
+                <input type="checkbox" id="Bourgignon_sauté_aux_légumes_avec_le_riz" name="plats[]" value="Bourgignon sauté aux légumes avec le riz - 6000 FCFA">
+                <label for="Bourgignon_sauté_aux_légumes_avec_le_riz">Bourgignon sauté aux légumes avec le riz – 6000 FCFA</label><br>
+                <input type="number" name="quantite[Bourgignon sauté aux légumes avec le riz]" min="0" value="0"><br><br>
+            </div>
+
+            <!-- Plat : Soupe de carpe avec attiéké -->
+            <div class="plat-item">
+                <input type="checkbox" id="Soupe_de_carpe_avec_attiéke" name="plats[]" value="Soupe de carpe avec attiéké - 4000 FCFA">
+                <label for="Soupe_de_carpe_avec_attiéke">Soupe de carpe avec attiéké – 4000 FCFA</label><br>
+                <input type="number" name="quantite[Soupe de carpe]" min="0" value="0"><br><br>
+            </div>
+
+            <!-- Plat : Soupe du pêcheur avec attiéké -->
+            <div class="plat-item">
+                <input type="checkbox" id="Soupe_du_pêcheur_avec_attiéke" name="plats[]" value="Soupe du pêcheur avec attiéké - 6000 FCFA">
+                <label for="Soupe_du_pêcheur_avec_attiéke">Soupe du pêcheur avec attiéké – 6000 FCFA</label><br>
+                <input type="number" name="quantite[Soupe du pêcheur]" min="0" value="0"><br><br>
+            </div>
+
+            <!-- Plat : Poulet au gingembre -->
+            <div class="plat-item">
+                <input type="checkbox" id="Poulet_au_gingembre" name="plats[]" value="Poulet au gingembre - 3500 FCFA">
+                <label for="Poulet_au_gingembre">Poulet au gingembre – 3500 FCFA</label><br>
+                <input type="number" name="quantite[Poulet au gingembre]" min="0" value="0"><br><br>
+            </div>
+
+            <!-- Plat : Demi Poulet -->
+            <div class="plat-item">
+                <input type="checkbox" id="Demi_Poulet" name="plats[]" value="Demi Poulet - 3500 FCFA">
+                <label for="Demi_Poulet">Demi Poulet – 3500 FCFA</label><br>
+                <input type="number" name="quantite[Demi Poulet]" min="0" value="0"><br><br>
+            </div>
+
+            <!-- Plat : Demi Poulet Pané -->
+            <div class="plat-item">
+                <input type="checkbox" id="Demi_Poulet_Pané" name="plats[]" value="Demi Poulet Pané - 3500 FCFA">
+                <label for="Demi_Poulet_Pané">Demi Poulet Pané – 3500 FCFA</label><br>
+                <input type="number" name="quantite[Demi Poulet Pané]" min="0" value="0"><br><br>
+            </div>
+
+            <!-- Plat : Kedjenou de Poulet -->
+            <div class="plat-item">
+                <input type="checkbox" id="Kedjenou_de_Poulet" name="plats[]" value="Kedjenou de Poulet - 3500 FCFA">
+                <label for="Kedjenou_de_Poulet">Kedjenou de Poulet – 3500 FCFA</label><br>
+                <input type="number" name="quantite[Kedjenou de Poulet]" min="0" value="0"><br><br>
+            </div>
+
+            <!-- Plat : Spaghetti au bourguignon -->
+            <div class="plat-item">
+                <input type="checkbox" id="Spaghetti_au_bourguignon" name="plats[]" value="Spaghetti au bourguignon - 4000 FCFA">
+                <label for="Spaghetti_au_bourguignon">Spaghetti au bourguignon – 4000 FCFA</label><br>
+                <input type="number" name="quantite[Spaghetti au bourguignon]" min="0" value="0"><br><br>
+            </div>
+
+            <!-- Plat : Attieké Poisson sole frit -->
+            <div class="plat-item">
+                <input type="checkbox" id="Attieke_Poisson_sole_frit" name="plats[]" value="Attieké Poisson sole frit - 2500 FCFA">
+                <label for="Attieke_Poisson_sole_frit">Attieké Poisson sole frit – 2500 FCFA</label><br>
+                <input type="number" name="quantite[Attieké Poisson sole frit]" min="0" value="0"><br><br>
+            </div>
+
+            <!-- Plat : Spaghetti aux boulettes -->
+            <div class="plat-item">
+                <input type="checkbox" id="Spaghetti_aux_boulettes" name="plats[]" value="Spaghetti aux boulettes - 4000 FCFA">
+                <label for="Spaghetti_aux_boulettes">Spaghetti aux boulettes – 4000 FCFA</label><br>
+                <input type="number" name="quantite[Spaghetti aux boulettes]" min="0" value="0"><br><br>
+            </div>
+
+            <!-- Plat : Spaghetti au poulet -->
+            <div class="plat-item">
+                <input type="checkbox" id="Spaghetti_au_poulet" name="plats[]" value="Spaghetti au poulet - 4500 FCFA">
+                <label for="Spaghetti_au_poulet">Spaghetti au poulet – 4500 FCFA</label><br>
+                <input type="number" name="quantite[Spaghetti au poulet]" min="0" value="0"><br><br>
+            </div>
+
+            <!-- Plat : Attieké au poulet -->
+            <div class="plat-item">
+                <input type="checkbox" id="Attieké_au_poulet" name="plats[]" value="Attieké au poulet - 3000 FCFA">
+                <label for="Attieké_au_poulet">Attieké au poulet – 3000 FCFA</label><br>
+                <input type="number" name="quantite[Attieké au poulet]" min="0" value="0"><br><br>
+            </div>
+
+            <!-- Plat : Ignames grillés au poisson -->
+            <div class="plat-item">
+                <input type="checkbox" id="Ignames_grillés_au_poisson" name="plats[]" value="Ignames grillés au poisson - 4000 FCFA">
+                <label for="Ignames_grillés_au_poisson">Ignames grillés au poisson – 4000 FCFA</label><br>
+                <input type="number" name="quantite[Ignames grillés au poisson]" min="0" value="0"><br><br>
+            </div>
+
+            <!-- Plat : Ragoût d'ignames au boeuf -->
+            <div class="plat-item">
+                <input type="checkbox" id="Ragoût_d_ignames_au_boeuf" name="plats[]" value="Ragoût d'ignames au boeuf - 4500 FCFA">
+                <label for="Ragoût_d_ignames_au_boeuf">Ragoût d'ignames au boeuf – 4500 FCFA</label><br>
+                <input type="number" name="quantite[Ragoût d'ignames au boeuf]" min="0" value="0"><br><br>
+            </div>
+
+            <!-- Plat : Ragoût d'ignames au poulet -->
+            <div class="plat-item">
+                <input type="checkbox" id="Ragoût_d_ignames_au_poulet" name="plats[]" value="Ragoût d'ignames au poulet - 4500 FCFA">
+                <label for="Ragoût_d_ignames_au_poulet">Ragoût d'ignames au poulet – 4500 FCFA</label><br>
+                <input type="number" name="quantite[Ragoût d'ignames au poulet]" min="0" value="0"><br><br>
+            </div>
+
+            <!-- Plat : Ragoût de pomme de terre au boeuf -->
+            <div class="plat-item">
+                <input type="checkbox" id="Ragoût_de_pomme_de_terre_au_boeuf" name="plats[]" value="Ragoût de pomme de terre au boeuf - 4500 FCFA">
+                <label for="Ragoût_de_pomme_de_terre_au_boeuf">Ragoût de pomme de terre au boeuf – 4500 FCFA</label><br>
+                <input type="number" name="quantite[Ragoût de pomme de terre au boeuf]" min="0" value="0"><br><br>
+            </div>
+
+            <!-- Plat : Petit Pois à la viande de bœuf -->
+            <div class="plat-item">
+                <input type="checkbox" id="Petit_Pois_à_la_viande_de_bœuf" name="plats[]" value="Petit Pois à la viande de bœuf - 4500 FCFA">
+                <label for="Petit_Pois_à_la_viande_de_bœuf">Petit Pois à la viande de bœuf – 4500 FCFA</label><br>
+                <input type="number" name="quantite[Petit Pois à la viande de bœuf]" min="0" value="0"><br><br>
+            </div>
+
+            <!-- Plat : Petit Pois aux boulettes -->
+            <div class="plat-item">
+                <input type="checkbox" id="Petit_Pois_aux_boulettes" name="plats[]" value="Petit Pois aux boulettes - 4500 FCFA">
+                <label for="Petit_Pois_aux_boulettes">Petit Pois aux boulettes – 4500 FCFA</label><br>
+                <input type="number" name="quantite[Petit Pois aux boulettes]" min="0" value="0"><br><br>
+            </div>
+
+            <!-- Plat : Petit Pois au poulet -->
+            <div class="plat-item">
+                <input type="checkbox" id="Petit_Pois_au_poulet" name="plats[]" value="Petit Pois au poulet - 4500 FCFA">
+                <label for="Petit_Pois_au_poulet">Petit Pois au poulet – 4500 FCFA</label><br>
+                <input type="number" name="quantite[Petit Pois au poulet]" min="0" value="0"><br><br>
+            </div>
+
+            <!-- Plat : Pomme de terre sautée au petit pois -->
+            <div class="plat-item">
+                <input type="checkbox" id="Pomme_de_terre_sautée_au_petit_poiss" name="plats[]" value="Pomme de terre sautée au petit pois - 6500 FCFA">
+                <label for="Pomme_de_terre_sautée_au_petit_poiss">Pomme de terre sautée au petit pois – 6500 FCFA</label><br>
+                <input type="number" name="quantite[Pomme de terre sautée au petit pois]" min="0" value="0"><br><br>
+            </div>
+
+            <!-- Plat : Pomme de terre sautée au bourguignon -->
+            <div class="plat-item">
+                <input type="checkbox" id="Pomme_de_terre_sautée_au_bourguignon" name="plats[]" value="Pomme de terre sautée au bourguignon - 4500 FCFA">
+                <label for="Pomme_de_terre_sautée_au_bourguignon">Pomme de terre sautée au bourguignon – 4500 FCFA</label><br>
+                <input type="number" name="quantite[Pomme de terre sautée au bourguignon]" min="0" value="0"><br><br>
+            </div>
+
+            <!-- Plat : Boulettes sautées -->
+            <div class="plat-item">
+                <input type="checkbox" id="Boulettes_sautées" name="plats[]" value="Boulettes sautées - 4000 FCFA">
+                <label for="Boulettes_sautées">Boulettes sautées – 4000 FCFA</label><br>
+                <input type="number" name="quantite[Boulettes sautées]" min="0" value="0"><br><br>
+            </div>
+
+            <!-- Plat : Alloco aux oeufs -->
+            <div class="plat-item">
+                <input type="checkbox" id="Alloco_aux_oeufs" name="plats[]" value="Alloco aux oeufs - 2500 FCFA">
+                <label for="Alloco_aux_oeufs">Alloco aux oeufs – 2500 FCFA</label><br>
+                <input type="number" name="quantite[Alloco aux oeufs]" min="0" value="0"><br><br>
+            </div>
+
+            <!-- Plat : Alloco au poulet -->
+            <div class="plat-item">
+                <input type="checkbox" id="Alloco_au_poulet" name="plats[]" value="Alloco au poulet - 3500 FCFA">
+                <label for="Alloco_au_poulet">Alloco au poulet – 3500 FCFA</label><br>
+                <input type="number" name="quantite[Alloco au poulet]" min="0" value="0"><br><br>
+            </div>
+
+            <!-- Plat : Frites aux Boulettes sautées -->
+            <div class="plat-item">
+                <input type="checkbox" id="frites_aux_Boulettes_sautées" name="plats[]" value="frites aux Boulettes sautées - 4500 FCFA">
+                <label for="frites_aux_Boulettes_sautées">Frites aux Boulettes sautées – 4500 FCFA</label><br>
+                <input type="number" name="quantite[frites aux Boulettes sautées]" min="0" value="0"><br><br>
+            </div>
+
+            <!-- Plat : Frites au poulet sauté -->
+            <div class="plat-item">
+                <input type="checkbox" id="frites_au_poulet_sauté" name="plats[]" value="frites au poulet sauté - 4000 FCFA">
+                <label for="frites_au_poulet_sauté">Frites au poulet sauté – 4000 FCFA</label><br>
+                <input type="number" name="quantite[frites au poulet sauté]" min="0" value="0"><br><br>
+            </div>
 
             <!-- Champ quartier -->
             <label for="quartier">Votre quartier :</label><br>
@@ -75,13 +224,17 @@
                 <option value="Autre">Autre (précisez)</option>
             </select><br><br>
 
-            <!-- Champ texte si quartier = Autre -->
+            <!-- Quartier = Autre -->
             <div id="autre-quartier" style="display: none;">
                 <label for="quartier-autre">Précisez votre quartier :</label><br>
                 <input type="text" id="quartier-autre" name="quartier_autre"><br><br>
             </div>
 
-            <!-- Champ accompagnements -->
+            <!-- Téléphone -->
+            <label for="telephone">Votre téléphone :</label><br>
+            <input type="tel" id="telephone" name="telephone" required><br><br>
+
+            <!-- Accompagnements -->
             <label for="accompagnement">Accompagnements ou compléments (facultatif) :</label><br>
             <select name="accompagnements[]" id="accompagnement" multiple size="5">
                 <option value="Riz - 1000 FCFA">Riz – 1000 FCFA</option>
@@ -91,6 +244,7 @@
                 <option value="Alloco - 1000 FCFA">Alloco – 1000 FCFA</option>
             </select><br><br>
 
+            <!-- Boisson -->
             <label for="boisson">Boisson (facultatif) :</label><br>
             <select name="boisson" id="boisson">
                 <option value="Aucune">Aucune</option>
@@ -100,9 +254,11 @@
                 <option value="Bières locales – 1500 FCFA">Bières locales – 1500 FCFA</option>
             </select><br><br>
 
+            <!-- Informations supplémentaires -->
             <label for="supplement">Informations supplémentaires (allergies, préférences, etc.) :</label><br>
             <textarea id="supplement" name="supplement" rows="4" placeholder="Exemple : Je suis allergique aux arachides."></textarea><br><br>
 
+            <!-- Bouton soumettre -->
             <button type="submit">Passer ma commande</button>
         </form>
     </div>
