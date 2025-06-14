@@ -17,7 +17,6 @@ frais_livraison = {
     "Bingerville": 2000,
     "Cocody": 1500,
     "Deux plateaux": 1500,
-    "plateau dokui": 1500,
     "Koumassi": 2500,
     "Marcory": 2500,
     "Plateau": 2000,
@@ -34,7 +33,7 @@ accompagnements_prix = {
     "Riz": 1000,
     "Ignames grillés": 1000,
     "Claclo": 1000,
-    "Attieké huile rouge": 1000,
+    "Attieké huile rouge": 630,
     "Alloco": 1000
 }
 
@@ -44,7 +43,7 @@ app = Flask(__name__, static_folder='static', template_folder='templates')
 
 # === Fonction d'envoi Telegram ===
 def send_telegram_message(message, chat_id):
-    url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"          
+    url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"             
     data = {
         "chat_id": chat_id,
         "text": message,
@@ -63,7 +62,7 @@ def send_telegram_message(message, chat_id):
 
 # === Vérifie si le bot peut écrire à ce chat ID ===
 def can_send_message(chat_id):
-    url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/getChat"    
+    url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/getChat"       
     data = {"chat_id": chat_id}
     try:
         response = requests.post(url, data=data)
@@ -101,45 +100,11 @@ def commander():
         quartier_final = "Inconnu"
         livraison = 1000  # Valeur par défaut si erreur
 
-    # Gestion de la quantité (avec erreur possible)
-    try:
-        quantite = int(request.form.get('quantite', '1'))
-    except ValueError:
-        quantite = 1
-
-    # Récupère tous les plats sélectionnés
+    # Récupère les plats cochés
     plats_bruts = request.form.getlist('plats[]')
+    plats = [p.split(" -")[0].strip() for p in plats_bruts if p]
 
-    # Nettoie les noms des plats en retirant le prix
-    plats = []
-    for plat in plats_bruts:
-        clean_plat = plat.split(" -")[0].strip()
-        if clean_plat:
-            plats.append(clean_plat)
-
-    # Récupère les accompagnements sélectionnés
-    accompagnements_bruts = request.form.getlist('accompagnements[]')
-
-    # Nettoie les noms des accompagnements
-    accompagnements = []
-    for acomp in accompagnements_bruts:
-        clean_acompaniment = acomp.split(" -")[0].strip()
-        if clean_acompaniment:
-            accompagnements.append(clean_acompaniment)
-
-    print("=== NOUVELLE COMMANDE ===")
-    print(f"Nom : {nom}")
-    print(f"Téléphone : {telephone}")
-    print(f"Quartier : {quartier_final}")
-    print(f"Frais de livraison : {livraison} FCFA")
-    print(f"Plats : {', '.join(plats)}")
-    print(f"Accompagnements : {', '.join(accompagnements)}")
-    print(f"Quantité : {quantite}")
-    print(f"Boisson : {boisson}")
-    print(f"Informations supplémentaires : {supplement}")
-    print("===========================")
-
-    # Dictionnaire des prix des plats
+    # Liste complète des plats avec leurs prix
     plats_prix = {
         "Bourgignon sauté à la moutarde": 4000,
         "Bourgignon sauté aux légumes avec le riz": 6000,
@@ -153,10 +118,11 @@ def commander():
         "Attieké Poisson sole frit": 2500,
         "Spaghetti aux boulettes": 4000,
         "Spaghetti au poulet": 4500,
-        "Attieké poulet": 3000,
+        "Attieké au poulet": 3000,
         "Ignames grillés au poisson": 4000,
         "Ragoût d'ignames au boeuf": 4500,
         "Ragoût d'ignames au poulet": 4500,
+        "Ragoût de pomme de terre au boeuf": 4500,
         "Petit Pois à la viande de bœuf": 4500,
         "Petit Pois aux boulettes": 4500,
         "Petit Pois au poulet": 4500,
@@ -170,35 +136,63 @@ def commander():
         "frites au poulet sauté": 4000
     }
 
-    # Calcul du total des plats
-    total_plats = 0
-    plats_avec_quantite = []
+    # Récupère les accompagnements sélectionnés
+    accompagnements_bruts = request.form.getlist('accompagnements[]')
+    accompagnements = [a.split(" -")[0].strip() for a in accompagnements_bruts if a]
 
-    for plat in plats:
-        if plat in plats_prix:
-            plat_prix = plats_prix[plat]
-            total_plats += plat_prix * quantite
-            plats_avec_quantite.append(f"{plat} x{quantite} = {plat_prix * quantite} FCFA")
-        else:
-            print(f"⚠️ Plat non reconnu : {plat}")
+    # Récupère les quantités par plat
+    quantites = {}
+    for plat in plats_prix:
+        qty = request.form.get(f"quantite[{plat}]")
+        try:
+            quantity = int(qty)
+            if quantity > 0:
+                quantites[plat] = quantity
+        except (ValueError, TypeError):
+            pass
+
+    print("=== NOUVELLE COMMANDE ===")
+    print(f"Nom : {nom}")
+    print(f"Téléphone : {telephone}")
+    print(f"Quartier : {quartier_final}")
+    print(f"Frais de livraison : {livraison} FCFA")
+    print(f"Plats : {', '.join(plats)}")
+    print(f"Quantité par plat : {quantites}")
+    print(f"Accompagnements : {', '.join(accompagnements)}")
+    print(f"Boisson : {boisson}")
+    print(f"Informations supplémentaires : {supplement}")
+    print("===========================")
+
+    # Calcul du total des plats
+    total_plats = sum(plats_prix[plat] * qty for plat, qty in quantites.items() if plat in plats_prix)
+    plats_avec_quantite = [
+        f"{plat} x{qty} = {plats_prix[plat] * qty} FCFA"
+        for plat, qty in quantites.items()
+        if plat in plats_prix
+    ]
 
     # Calcul du total des accompagnements
-    total_accompagnements = 0
-    acompaniments_avec_quantite = []
-
-    for acomp in accompagnements:
-        if acomp in accompagnements_prix:
-            acomp_prix = accompagnements_prix[acomp]
-            total_accompagnements += acomp_prix * quantite
-            acompaniments_avec_quantite.append(f"{acomp} x{quantite} = {acomp_prix * quantite} FCFA")
-        else:
-            print(f"⚠️ Accompagnement non reconnu : {acomp}")
+    total_accompagnements = sum(
+        accompagnements_prix[acomp] * qty
+        for acomp, qty in quantites.items()
+        if acomp in accompagnements_prix
+    )
+    acompaniments_avec_quantite = [
+        f"{acomp} x{qty} = {accompagnements_prix[acomp] * qty} FCFA"
+        for plat in plats
+        if plat in accompagnements_prix
+        for qty in [quantites.get(plat, 1)]
+    ]
 
     # Prix de la boisson
     if "Coca Cola" in boisson:
-        prix_boisson = 500
+        prix_boisson = 1000
+    elif "Jus naturel" in boisson:
+        prix_boisson = 1500
     elif "Eau 1.5L" in boisson:
         prix_boisson = 1000
+    elif "Bières locales" in boisson:
+        prix_boisson = 1500
     else:
         prix_boisson = 0
 
@@ -218,9 +212,11 @@ def commander():
         message += "Aucun plat sélectionné.\n\n"
 
     # Accompagnements sélectionnés
-    if acompaniments_avec_quantite:
-        message += "Accompagnements sélectionnés :\n"
-        message += "- " + "\n- ".join(acompaniments_avec_quantite) + "\n\n"
+    message += "Accompagnements sélectionnés :\n"
+    if accompagnements:
+        message += "- " + "\n- ".join(accompagnements) + "\n\n"
+    else:
+        message += "Aucun accompagnement sélectionné.\n\n"
 
     # Boisson
     message += f"Boisson : {boisson}\n\n"
